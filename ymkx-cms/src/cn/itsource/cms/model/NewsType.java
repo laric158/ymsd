@@ -1,0 +1,27 @@
+package cn.itsource.cms.model;
+/**
+ * 新闻类型模型类
+ * @author st
+ *
+ */
+public class NewsType {
+	private Long id;
+	private String name;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	@Override
+	public String toString() {
+		return "NewsType [id=" + id + ", name=" + name + "]";
+	}
+	
+}

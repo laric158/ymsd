@@ -1,0 +1,36 @@
+CREATE TABLE `student` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `weight` double(5,2) DEFAULT NULL,
+  `age` int(3) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `t_news` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) DEFAULT NULL COMMENT '标题',
+  `context` longtext COMMENT '内容',
+  `imgUrl` varchar(200) DEFAULT NULL COMMENT '图片地址',
+  `viewCount` int(11) DEFAULT NULL COMMENT '观看次数',
+  `isRecommend` bit(1) DEFAULT NULL COMMENT '是否推荐',
+  `inputDate` datetime DEFAULT NULL COMMENT '录入日期',
+  `type_id` bigint(20) DEFAULT NULL COMMENT '新闻类型ID',
+  `user_id` bigint(20) DEFAULT NULL COMMENT '录入人ID',
+  `imgSmallUrl` varchar(255) DEFAULT NULL COMMENT '小图地址',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `t_newstype` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `t_user` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `type` int(20) NOT NULL,
+  `isLogin` int(2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;

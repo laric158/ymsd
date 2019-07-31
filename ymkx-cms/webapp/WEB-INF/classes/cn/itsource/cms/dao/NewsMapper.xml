@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.itsource.cms.dao.NewsMapper">
+
+	<resultMap type="cn.itsource.cms.model.News" id="newsMap">
+		<id column="id" property="id" />
+		<result column="title" property="title" />
+		<result column="context" property="context" />
+		<result column="imgUrl" property="imgUrl" />
+		<result column="viewCount" property="viewCount" />
+		<result column="isRecommend" property="isRecommend" />
+		<result column="inputDate" property="inputDate" />
+		<result column="type_id" property="type_id" />
+		<result column="user_id" property="user_id" />
+		<result column="imgSmallUrl" property="imgSmallUrl" />
+	</resultMap>
+
+	<select id="findAll" resultMap="newsMap">
+		select * from t_news
+	</select>
+
+	<select id="findById" parameterType="int" resultMap="newsMap">
+		select *
+		from t_news where id = #{id}
+	</select>
+
+	<select id="deleteById" parameterType="int">
+		delete from t_news where
+		id = #{id}
+	</select>
+
+	<insert id="addNews" parameterType="cn.itsource.cms.model.News">
+		insert into
+		t_news(title,context,viewCount,isRecommend,inputDate,type_id,user_id)
+		values(
+		#{title},
+		#{context},
+		#{viewCount},
+		#{isRecommend},
+		#{inputDate},
+		#{type_id},
+		#{user_id}
+		)
+	</insert>
+
+	<update id="updateNews"
+		parameterType="cn.itsource.cms.model.News">
+		update t_news set
+		title=#{title},context=#{context},viewCount=#{viewCount},
+		isRecommend=#{isRecommend},type_id=#{type_id},user_id=#{user_id}
+		WHEREid=#{id}
+	</update>
+
+	<select id="getCountByParam" resultType="int">
+		select count(1) from t_news
+		where 1=1
+		<if test="type!=null and type!=''">
+			and type_id = #{type}
+		</if>
+		<if test="isRecommend!=null and isRecommend!=''">
+			and isRecommend = #{isRecommend}
+		</if>
+		<if test="keyword!=null and keyword!=''">
+			and title like #{keyword}
+		</if>
+	</select>
+
+	<select id="findByParamAndList" resultMap="newsMap">
+		select * from t_news
+		where 1=1
+		<if test="type!=null and type!=''">
+			and type_id = #{type}
+		</if>
+		<if test="isRecommend!=null and isRecommend!=''">
+			and isRecommend = #{isRecommend}
+		</if>
+		<if test="keyword!=null and keyword!=''">
+			and title like #{keyword}
+		</if>
+		order by inputDate desc
+		limit #{start},#{size}
+	</select>
+
+	<!-- 推荐 -->
+	<select id="findRecommendTop5News" resultMap="newsMap">
+		select * from t_news t
+		where t.isRecommend = 1
+		limit 0,5
+	</select>
+	
+	<!-- 最新 -->
+	<select id="findNewestTop5News" resultMap="newsMap">
+		select * from t_news t
+		order by t.inputDate desc
+		limit 0,5
+	</select>
+	
+	<!-- 最热 -->
+	<select id="findHotTop5News" resultMap="newsMap">
+		select * from t_news t
+		order by t.viewCount desc
+		limit 0,5
+	</select>
+
+</mapper>
